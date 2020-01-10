@@ -9,13 +9,16 @@ pipeline {
                             steps{
                                   echo 'Checking out code from GitHub'
                                   checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/vmadykumar/node-hello.git']]])                            
+                                  echo 'checkout completed'
                             }
                                                                           
                   }
                   stage ('build') {
                             steps{
-                                    echo 'building source code'
-                                    sh 'node start'
+                                       
+                                        echo 'building source code'
+                                        sh 'npm install'
+                                        sh 'node start'
                             }
                                     
                   }
