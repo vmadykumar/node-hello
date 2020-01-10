@@ -1,5 +1,5 @@
 pipeline {
-          agent {label 'ubuntu'}
+          agent {label 'docker'}
           parameters {
                       booleanParam(name: 'Push code to Staging Environment', defaultValue: true, description: 'Will push code on the Staging Environment')
                       booleanParam(name: 'Push code to Production Environment', defaultValue: false, description: 'Will push code to the Production Environment')
