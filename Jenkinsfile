@@ -17,7 +17,7 @@ pipeline {
                             steps{
                                        
                                         echo 'building source code'
-                                        sh 'npm install'
+                                        //sh 'npm install'
                                         sh 'node start'
                             }
                                     
