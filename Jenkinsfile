@@ -18,6 +18,8 @@ pipeline {
                                        
                                         echo 'building source code'
                                         //sh 'npm install'
+                                        sh ' cp /home/vikashkumar/Jenkins/workspace/gogo/package.json ./'
+                                        sh 'cp /home/vikashkumar/Jenkins/workspace/gogo/app.js ./'
                                         sh 'npm start &'
                             }
                                     
