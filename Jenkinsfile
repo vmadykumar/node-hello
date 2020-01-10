@@ -18,7 +18,7 @@ pipeline {
                                        
                                         echo 'building source code'
                                         //sh 'npm install'
-                                        sh 'npm start'
+                                        sh 'nohup npm start'
                             }
                                     
                   }
