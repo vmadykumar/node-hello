@@ -6,13 +6,18 @@ pipeline {
           }
           stages{
                   stage('checkout') {
-                                      echo 'Checking out code from GitHub'
-                                      checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/vmadykumar/node-hello.git']]])
-                                    
+                            steps{
+                                  echo 'Checking out code from GitHub'
+                                  checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/vmadykumar/node-hello.git']]])                            
+                            }
+                                                                          
                   }
                   stage ('build') {
+                            steps{
                                     echo 'building source code'
                                     sh 'node start'
+                            }
+                                    
                   }
                   stage('Artifactory'){
                                         steps { 
