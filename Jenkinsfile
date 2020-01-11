@@ -78,4 +78,24 @@ pipeline {
                                 }
                   }
           }
+          post {
+                        always {
+                                echo 'One way or another, I have finished'
+                                deleteDir() /* clean up our workspace */
+                        }
+                        success {
+                                echo 'Yeppie.. I succeeeded!'
+                                emailext body: 'Everything went well :) ${env.BUILD_URL}', subject: 'Succeeded Pipeline: ${currentBuild.fullDisplayName}', to: 'vikash.bcet@gmail.com'
+                        }
+                        unstable {
+                                echo 'Oh! No I am unstable :/'
+                        }
+                        failure {
+                                echo 'Shit.. I failed :('
+                                emailext body: 'Something is wrong with ${env.BUILD_URL}', subject: 'Failed Pipeline: ${currentBuild.fullDisplayName}', to: 'vikash.bcet@gmail.com'
+                        }
+                        changed {
+                                echo 'Things were different before...'
+                        }
+        }
 }
