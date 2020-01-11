@@ -1,8 +1,8 @@
 pipeline {
           agent {label 'docker'}
           parameters {
-                      booleanParam(name: 'Push code to Staging Environment', defaultValue: true, description: 'Will push code on the Staging Environment')
-                      booleanParam(name: 'Push code to Production Environment', defaultValue: false, description: 'Will push code to the Production Environment')
+                      booleanParam(name: 'Stagin_Release ', defaultValue: true, description: 'Will push code on the Staging Environment')
+                      booleanParam(name: 'Production_Release ', defaultValue: false, description: 'Will push code to the Production Environment')
           }
           stages{
                   stage('checkout') {
@@ -32,6 +32,50 @@ pipeline {
                                                                 echo 'Artifact created'
                                                 }
                                         }
+                  }
+                  stage('Approval Step'){
+                                   when {
+                                        expression { params.Stagin_Release == true}
+                                   }
+                                   steps{
+                                           script {  
+                                                            input message: 'Approve Deploy?', ok: 'Yes', submitter: 'Dev_xyz'
+                                                }
+                                   }
+                  }
+                  stage('Staging Release'){
+                                        agent any
+                                        when {
+                                                expression { params.Stagin_Release == true }
+                                        }
+                                steps {
+                                        echo 'Starting Release'
+                                          // Here we need to provide the deployment path and credentails of either cloud / Inhouse server for eg: given below 
+                                        //deploy adapters: [tomcat7(credentialsId: '51d79b50-5fd8-4444-91eb-c6ead7dc4151', path: '', url: 'http://abc.df.gh.xyz:8081')], contextPath: '/NodeAPP', war: 'Code/target/*.war'
+                                        echo 'Release Completed'
+                                }
+                  }
+                  stage('Approval Step'){
+                                   when {
+                                        expression { params.Production_Release == true}
+                                   }
+                                   steps{
+                                           script {  
+                                                            input message: 'Approve Deploy?', ok: 'Yes', submitter: 'PME_xyz'
+                                                }
+                                   }
+                  }
+                  stage('Production Release'){
+                                        agent any
+                                        when {
+                                                expression { params.Production_Release == true }
+                                        }
+                                steps {
+                                        echo 'Starting Release'
+                                        // Here we need to provide the deployment path and credentails of either cloud / Inhouse server for eg: given below 
+                                        //deploy adapters: [tomcat7(credentialsId: '51d79b50-5fd8-4444-91eb-c6ead7dc4151', path: '', url: 'http://abc.df.gh.xyz:8081')], contextPath: '/NodeAPP', war: 'Code/target/*.war'
+                                        echo 'Release Completed'
+                                }
                   }
           }
 }
