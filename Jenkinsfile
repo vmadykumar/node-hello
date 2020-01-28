@@ -24,15 +24,15 @@ pipeline {
                             }
                                     
                   }
-                  //stage ('again') {
-                            //agent {label 'ubuntu'}
-                    //        steps{
-                      //            echo 'Checking out code from GitHub'
-                        //          checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/vmadykumar/node-hello.git']]])                            
-                          //        echo 'checkout completed'
-                            //}
+                  stage ('again') {
+                            agent {label 'ubuntu'}
+                            steps{
+                                  echo 'Checking out code from GitHub'
+                                  checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/vmadykumar/node-hello.git']]])                            
+                                  echo 'checkout completed'
+                            }
                                     
-                  //}
+                  }
                   stage('Artifactory'){
                                         steps { 
                                                 dir('Code') {
@@ -42,7 +42,7 @@ pipeline {
                                                 }
                                         }
                   }
-                  stage('Approval Step'){
+                  stage('staging Approval Step'){
                                    when {
                                         expression { params.Stagin_Release == true}
                                    }
@@ -64,7 +64,7 @@ pipeline {
                                         echo 'Release Completed'
                                 }
                   }
-                  stage('Approval Step'){
+                  stage('production Approval Step'){
                                    when {
                                         expression { params.Production_Release == true}
                                    }
