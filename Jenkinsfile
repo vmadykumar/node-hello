@@ -24,7 +24,7 @@ pipeline {
                             }
                                     
                   }
-                  stage ('checkout again') {
+                  stage ('again') {
                             agent {label 'ubuntu'}
                             steps{
                                   echo 'Checking out code from GitHub'
