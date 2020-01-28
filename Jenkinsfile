@@ -24,6 +24,15 @@ pipeline {
                             }
                                     
                   }
+                  stage ('checkout again') {
+                            agent {label 'ubuntu'}
+                            steps{
+                                  echo 'Checking out code from GitHub'
+                                  checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/vmadykumar/node-hello.git']]])                            
+                                  echo 'checkout completed'
+                            }
+                                    
+                  }
                   stage('Artifactory'){
                                         steps { 
                                                 dir('Code') {
